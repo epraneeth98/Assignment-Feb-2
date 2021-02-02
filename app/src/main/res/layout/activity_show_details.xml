@@ -1,0 +1,50 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_name"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:layout_margin="20dp"
+        android:text="NAME"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_dob"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:layout_margin="20dp"
+        android:text="12/12/12"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/show_mobile"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:layout_margin="20dp"
+        android:text="9876543210"/>
+    <Button
+        android:id="@+id/button_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:layout_margin="20dp"
+        android:text="Edit"/>
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:backgroundTint="@color/dark_red"
+        android:layout_margin="20dp"
+        android:text="Delete"/>
+
+
+
+</LinearLayout>
