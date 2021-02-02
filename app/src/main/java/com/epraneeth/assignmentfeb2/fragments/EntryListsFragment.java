@@ -12,16 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.epraneeth.assignmentfeb2.R;
-import com.epraneeth.assignmentfeb2.adapters.EntryListAdapter;
+import com.epraneeth.assignmentfeb2.adapters.EntryListsAdapter;
 import com.epraneeth.assignmentfeb2.db.AppDatabase;
 import com.epraneeth.assignmentfeb2.db.Entry;
 
 import java.util.List;
 
-public class ViewEntryListFragment extends Fragment {
+public class EntryListsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    EntryListAdapter entryListAdapter;
+    EntryListsAdapter entryListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,7 +33,7 @@ public class ViewEntryListFragment extends Fragment {
     }
 
     private void init(View view) {
-        entryListAdapter = new EntryListAdapter(this.getContext());
+        entryListAdapter = new EntryListsAdapter(this.getContext());
 
         AppDatabase db = AppDatabase.getDbInstance(this.getContext());
         List<Entry> entryList = db.entryDao().getAllEntries();

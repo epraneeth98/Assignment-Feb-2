@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
-public class EntryListAdapter extends RecyclerView.Adapter<EntryViewHolder> {
+public class EntryListsAdapter extends RecyclerView.Adapter<EntryViewHolder> {
     Context mContext;
     private List<Entry> entryList= new ArrayList<>();
 
-    public EntryListAdapter(Context mContext) {
+    public EntryListsAdapter(Context mContext) {
         this.mContext = mContext;
     }
 

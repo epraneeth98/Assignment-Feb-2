@@ -1,25 +1,32 @@
 package com.epraneeth.assignmentfeb2.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.epraneeth.assignmentfeb2.R;
+import com.epraneeth.assignmentfeb2.activities.MainActivity;
 import com.epraneeth.assignmentfeb2.db.AppDatabase;
 import com.epraneeth.assignmentfeb2.db.Entry;
 import com.google.android.material.tabs.TabLayout;
 
-public class CreateEntryFragment extends Fragment {
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
+
+public class CreateEntryFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,6 +77,7 @@ public class CreateEntryFragment extends Fragment {
     private void init(View view) {
         textName = view.findViewById(R.id.tv_name);
         textDOB = view.findViewById(R.id.tv_dob);
+        textDOB.setFocusable(false);
         textMobile = view.findViewById(R.id.tv_mobile);
         buttonSave = view.findViewById(R.id.save_button);
         AppDatabase db = AppDatabase.getDbInstance(this.getContext());
@@ -85,10 +93,29 @@ public class CreateEntryFragment extends Fragment {
 //                        .beginTransaction()
 //                        .replace(new ViewEntryListFragment())
 //                        .commit();
+
                 viewPager.setCurrentItem(0);
             }
         });
 
+        textDOB.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getContext(),
+                    this,
+                    Calendar.getInstance().get(Calendar.YEAR),
+                    Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+            );
+            datePickerDialog.show();
+        });
+
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String month_text = new DateFormatSymbols().getMonths()[month-1];
+        String date = dayOfMonth+"/"+ month_text +"/"+year;
+        Log.d("abc","date: "+date);
+        textDOB.setText(date);
+    }
 }
