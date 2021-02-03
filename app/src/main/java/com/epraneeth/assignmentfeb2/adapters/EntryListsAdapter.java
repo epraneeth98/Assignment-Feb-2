@@ -21,7 +21,7 @@ import java.util.List;
 public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder> {//implements Filterable {
     Context mContext;
     private List<Entry> entryList= new ArrayList<>();
-    private List<Entry> allEntriesList = new ArrayList<>();
+//    private List<Entry> allEntriesList = new ArrayList<>();
 
     public EntryListsAdapter(Context mContext) {
         this.mContext = mContext;
@@ -29,7 +29,7 @@ public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder
 
     public void setEntryList(List<Entry> entryList){
         this.entryList = entryList;
-        allEntriesList = new ArrayList<>(entryList);
+//        allEntriesList = new ArrayList<>(entryList);
         notifyDataSetChanged();
     }
 
@@ -52,36 +52,5 @@ public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder
     public int getItemCount() {
         return entryList.size();
     }
-
-//    @Override
-//    public Filter getFilter() {
-//        return filter;
-//    }
-//    Filter filter = new Filter() {
-//        @Override
-//        protected FilterResults performFiltering(CharSequence constraint) {
-//
-//            List<Entry> filteredList = new ArrayList<>();
-//            if(constraint.toString().isEmpty()){
-//                filteredList.addAll(allEntriesList);
-//            }else{
-//                for(Entry entry: allEntriesList){
-//                    if(entry.getName().toLowerCase().contains(constraint.toString().toLowerCase())){
-//                        filteredList.add(entry);
-//                    }
-//                }
-//            }
-//            FilterResults filterResults = new FilterResults();
-//            filterResults.values = filteredList;
-//            return filterResults;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence constraint, FilterResults results) {
-//            entryList.clear();
-//            entryList.addAll((Collection<? extends Entry>) results.values);
-//            notifyDataSetChanged();
-//        }
-//    };
 
 }

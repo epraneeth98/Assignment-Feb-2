@@ -1,8 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="30dp"
     android:orientation="vertical"
     android:padding="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        android:text="Registration"/>
 
     <!--    <ImageView-->
     <!--        android:layout_width=""-->
@@ -13,7 +24,7 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="25dp"
         android:hint="Name"
         android:inputType="text" />
 
@@ -21,7 +32,7 @@
         android:id="@+id/tv_dob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="25dp"
         android:hint="Date of Birth"
         android:inputType="date" />
 
@@ -30,7 +41,7 @@
         android:digits="+0123456789*#"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="25dp"
         android:hint="Mobile number"
         android:inputType="number" />
 
@@ -39,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="15dp"
+        android:layout_margin="30dp"
         android:text="Save" />
 
 
@@ -48,9 +59,10 @@
 <!--        android:layout_height="wrap_content">-->
 
 <!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/sdfsd"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content" />-->
-<!--        -->
+
 <!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 

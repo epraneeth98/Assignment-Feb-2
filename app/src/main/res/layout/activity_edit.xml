@@ -1,14 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="30dp"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/tv_name"
-
+        android:layout_margin="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         android:hint="Name"
         android:inputType="text" />
 
@@ -16,7 +16,7 @@
         android:id="@+id/tv_dob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="25dp"
         android:hint="Date of Birth"
         android:inputType="date" />
 
@@ -24,14 +24,14 @@
         android:id="@+id/tv_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="25dp"
         android:digits="+0123456789*#"
         android:hint="Mobile number"
         android:inputType="number" />
 
     <Button
-        android:id="@+id/button_update"
-        android:layout_width="wrap_content"
+        android:id="@+id/button_edit"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="15dp"
@@ -39,11 +39,20 @@
 
     <Button
         android:id="@+id/button_add_as_new"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="15dp"
         android:text="Add as new" />
+
+    <Button
+        android:id="@+id/button_delete"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/dark_red"
+        android:layout_margin="15dp"
+        android:text="Delete"/>
 
 
 </LinearLayout>

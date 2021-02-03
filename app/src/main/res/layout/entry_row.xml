@@ -6,7 +6,7 @@
 
     <ImageView
         android:id="@+id/image_view"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@drawable/ic_baseline_person_24"
         android:layout_width="100dp"
         android:layout_height="100dp" />
 

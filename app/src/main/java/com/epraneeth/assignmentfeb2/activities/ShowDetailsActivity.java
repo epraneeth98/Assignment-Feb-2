@@ -13,8 +13,6 @@ import com.epraneeth.assignmentfeb2.R;
 import com.epraneeth.assignmentfeb2.db.AppDatabase;
 import com.epraneeth.assignmentfeb2.db.Entry;
 
-import java.util.List;
-
 public class ShowDetailsActivity extends AppCompatActivity {
     TextView textViewName, textViewDOB, textViewMobile;
     Button buttonUpdate, buttonDelete;
@@ -31,7 +29,7 @@ public class ShowDetailsActivity extends AppCompatActivity {
         textViewDOB = findViewById(R.id.show_dob);
         textViewMobile = findViewById(R.id.show_mobile);
         buttonDelete = findViewById(R.id.button_delete);
-        buttonUpdate = findViewById(R.id.button_update);
+        buttonUpdate = findViewById(R.id.button_edit);
         Intent intent = getIntent();
         String uid = intent.getStringExtra("uid");
 
