@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.epraneeth.assignmentfeb2.R;
+import com.epraneeth.assignmentfeb2.adapters.EntryListsAdapter;
 import com.epraneeth.assignmentfeb2.adapters.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -17,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    EntryListsAdapter entryListsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
-
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -40,9 +44,20 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
 
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
-//        getLayoutInflater().inflate(R.menu.main_menu, (ViewGroup) menu);
+//        getMenuInflater().inflate(R.menu.main_menu, menu);
 //        MenuItem item = menu.findItem(R.id.action_search);
 //        SearchView searchView = (SearchView) item.getActionView();
 //        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -53,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //            @Override
 //            public boolean onQueryTextChange(String newText) {
+//                entryListsAdapter.getFilter().filter(newText);
 //                return false;
 //            }
 //        });

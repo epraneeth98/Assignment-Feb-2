@@ -63,4 +63,11 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.1.0'
     annotationProcessor 'androidx.room:room-compiler:2.1.0'
 
+
+    // add two dependencies in build.gradle (Module: app)
+    // universal image loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    // circular image view library
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
 }

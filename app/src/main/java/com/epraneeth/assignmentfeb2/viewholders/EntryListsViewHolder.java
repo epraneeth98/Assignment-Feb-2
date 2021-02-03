@@ -14,7 +14,7 @@ import com.epraneeth.assignmentfeb2.R;
 import com.epraneeth.assignmentfeb2.activities.ShowDetailsActivity;
 import com.epraneeth.assignmentfeb2.db.Entry;
 
-public class EntryViewHolder extends RecyclerView.ViewHolder {
+public class EntryListsViewHolder extends RecyclerView.ViewHolder {
 
     public TextView textView;
     public ImageView imageView;
@@ -29,7 +29,7 @@ public class EntryViewHolder extends RecyclerView.ViewHolder {
         this.mContext = mContext;
     }
 
-    public EntryViewHolder(@NonNull View itemView) {
+    public EntryListsViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.image_view);
         textView = itemView.findViewById(R.id.text_view);

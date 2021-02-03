@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -41,29 +42,6 @@ public class CreateEntryFragment extends Fragment implements DatePickerDialog.On
     EditText textName, textDOB, textMobile;
     Button buttonSave;
     ViewPager viewPager;
-    TabLayout tabLayout;
-
-    public CreateEntryFragment() {
-        // Required empty public constructor
-    }
-
-    public static CreateEntryFragment newInstance(String param1, String param2) {
-        CreateEntryFragment fragment = new CreateEntryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,10 +67,6 @@ public class CreateEntryFragment extends Fragment implements DatePickerDialog.On
                         textDOB.getText().toString(),
                         textMobile.getText().toString());
                 db.entryDao().insertEntry(entry);
-//                getFragmentManager()
-//                        .beginTransaction()
-//                        .replace(new ViewEntryListFragment())
-//                        .commit();
 
                 viewPager.setCurrentItem(0);
             }
@@ -113,9 +87,24 @@ public class CreateEntryFragment extends Fragment implements DatePickerDialog.On
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String month_text = new DateFormatSymbols().getMonths()[month-1];
+        String month_text = new DateFormatSymbols().getMonths()[month];
         String date = dayOfMonth+"/"+ month_text +"/"+year;
         Log.d("abc","date: "+date);
         textDOB.setText(date);
+    }
+
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        textName.setText("");
+        textDOB.setText("");
+        textMobile.setText("");
     }
 }

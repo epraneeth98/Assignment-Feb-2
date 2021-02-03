@@ -32,7 +32,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        if(position==0) return "View";
+        if(position==0) return "Entries";
         else return "Create Entry";
     }
 }
