@@ -18,10 +18,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder> {//implements Filterable {
+public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder> {
     Context mContext;
     private List<Entry> entryList= new ArrayList<>();
-//    private List<Entry> allEntriesList = new ArrayList<>();
 
     public EntryListsAdapter(Context mContext) {
         this.mContext = mContext;
@@ -29,8 +28,16 @@ public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder
 
     public void setEntryList(List<Entry> entryList){
         this.entryList = entryList;
-//        allEntriesList = new ArrayList<>(entryList);
         notifyDataSetChanged();
+    }
+
+    public void removeEntry(int position){
+        this.entryList.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public  void editEntry(int position){
+
     }
 
     @NonNull

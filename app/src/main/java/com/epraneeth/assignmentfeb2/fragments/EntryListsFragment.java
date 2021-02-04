@@ -2,12 +2,15 @@ package com.epraneeth.assignmentfeb2.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -35,7 +38,7 @@ public class EntryListsFragment extends Fragment {
     RecyclerView recyclerView;
     EntryListsAdapter entryListAdapter;
     AppDatabase db;
-
+    List<Entry> entryList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,20 +59,42 @@ public class EntryListsFragment extends Fragment {
     private void init(View view) {
         Context currentContext = this.getContext();
         entryListAdapter = new EntryListsAdapter(currentContext);
-
-        List<Entry> entryList = db.entryDao().getAllEntries();
+        entryList = db.entryDao().getAllEntries();
         entryListAdapter.setEntryList(entryList);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(currentContext));
-
+        //Decorator
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(currentContext, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(entryListAdapter);
 
         MainActivity.hideKeyboard((Activity) currentContext);
+    }
 
+    ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            if(direction == ItemTouchHelper.RIGHT) {
+                entryListAdapter.removeEntry(viewHolder.getAdapterPosition());
+                entryListAdapter.notifyDataSetChanged();
+            }
+        }
+
+    };
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 
     @Override
@@ -77,13 +102,8 @@ public class EntryListsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.main_menu, menu);
-        Log.d("abc", "ONEONE");
         MenuItem item = menu.findItem(R.id.action_search);
-        Log.d("abc", "TWOTWO");
-        Log.d("abc", (String) item.getTitle());
-        SearchView searchView =  (SearchView) item.getActionView();//new SearchView(((MainActivity)getContext()).getSupportActionBar().getThemedContext());
-        //item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        //item.setActionView(searchView);
+        SearchView searchView =  (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -97,21 +117,10 @@ public class EntryListsFragment extends Fragment {
         });
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-        }
-    }
-
-
     void filter(String text){
         List<Entry> temp = new ArrayList<>();
         List<Entry> entryList = db.entryDao().getAllEntries();
         for(Entry d: entryList){
-            //or use .equal(text) with you want equal match
-            //use .toLowerCase() for better matches
             if(d.getName().toLowerCase().contains(text.toLowerCase())){
                 temp.add(d);
             }

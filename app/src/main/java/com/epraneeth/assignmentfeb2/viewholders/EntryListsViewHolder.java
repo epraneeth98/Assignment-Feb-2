@@ -34,13 +34,10 @@ public class EntryListsViewHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.image_view);
         textView = itemView.findViewById(R.id.text_view);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(mContext, ShowDetailsActivity.class);
-                i.putExtra("uid", String.valueOf(entry.getUid()));
-                mContext.startActivity(i);
-            }
+        itemView.setOnClickListener(v -> {
+            Intent i = new Intent(mContext, ShowDetailsActivity.class);
+            i.putExtra("uid", String.valueOf(entry.getUid()));
+            mContext.startActivity(i);
         });
     }
 

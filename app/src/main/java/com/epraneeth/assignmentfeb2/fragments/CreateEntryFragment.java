@@ -47,21 +47,21 @@ public class CreateEntryFragment extends Fragment implements DatePickerDialog.On
         textDOB.setFocusable(false);
         textMobile = view.findViewById(R.id.tv_mobile);
         buttonSave = view.findViewById(R.id.save_button);
-        AppDatabase db = AppDatabase.getDbInstance(this.getContext());
         viewPager = getActivity().findViewById(R.id.view_pager);
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Entry entry = new Entry(textName.getText().toString(),
-                        textDOB.getText().toString(),
-                        textMobile.getText().toString());
-                db.entryDao().insertEntry(entry);
+        buttonSave.setOnClickListener(this::onClick);
+        textDOB.setOnClickListener(this::onClick);
+    }
 
-                viewPager.setCurrentItem(0);
-            }
-        });
+    private void onClick(View view) {
+        AppDatabase db = AppDatabase.getDbInstance(this.getContext());
+        if(view.getId()==buttonSave.getId()){
+            Entry entry = new Entry(textName.getText().toString(),
+                    textDOB.getText().toString(),
+                    textMobile.getText().toString());
+            db.entryDao().insertEntry(entry);
+            viewPager.setCurrentItem(0);
 
-        textDOB.setOnClickListener(v -> {
+        }else if(view.getId()==textDOB.getId()){
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     getContext(),
                     this,
@@ -70,8 +70,7 @@ public class CreateEntryFragment extends Fragment implements DatePickerDialog.On
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
             );
             datePickerDialog.show();
-        });
-
+        }
     }
 
     @Override

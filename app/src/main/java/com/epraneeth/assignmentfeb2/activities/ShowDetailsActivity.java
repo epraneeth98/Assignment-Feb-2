@@ -13,9 +13,13 @@ import com.epraneeth.assignmentfeb2.R;
 import com.epraneeth.assignmentfeb2.db.AppDatabase;
 import com.epraneeth.assignmentfeb2.db.Entry;
 
-public class ShowDetailsActivity extends AppCompatActivity {
+public class ShowDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     TextView textViewName, textViewDOB, textViewMobile;
-    Button buttonUpdate, buttonDelete;
+    Button buttonEdit, buttonDelete;
+    Entry entry;
+    AppDatabase db;
+    String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,33 +33,36 @@ public class ShowDetailsActivity extends AppCompatActivity {
         textViewDOB = findViewById(R.id.show_dob);
         textViewMobile = findViewById(R.id.show_mobile);
         buttonDelete = findViewById(R.id.button_delete);
-        buttonUpdate = findViewById(R.id.button_edit);
-        Intent intent = getIntent();
-        String uid = intent.getStringExtra("uid");
+        buttonEdit = findViewById(R.id.button_edit);
+        db = AppDatabase.getDbInstance(this);
 
-        AppDatabase db = AppDatabase.getDbInstance(this);
+        uid = getIntent().getStringExtra("uid");
+        fillDetails(uid);
+
+    }
+
+    private void fillDetails(String uid) {
         Log.d("abc", "uid: "+uid);
-        Entry entry = db.entryDao().getEntry(Long.parseLong(uid));
+        entry = db.entryDao().getEntry(Long.parseLong(uid));
         textViewName.setText(entry.getName());
         textViewDOB.setText(entry.getDob());
         textViewMobile.setText(entry.getMobile());
 
+        buttonDelete.setOnClickListener(this);
+        buttonEdit.setOnClickListener(this);
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db.entryDao().delete(entry);
-                ShowDetailsActivity.this.startActivity(new Intent(ShowDetailsActivity.this, MainActivity.class));
-            }
-        });
+    }
 
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ShowDetailsActivity.this, EditActivity.class);
-                i.putExtra("entry", entry);
-                ShowDetailsActivity.this.startActivity(i);
-            }
-        });
+    @Override
+    public void onClick(View v) {
+        if(v.getId()== buttonEdit.getId()){
+            Intent i = new Intent(ShowDetailsActivity.this, EditActivity.class);
+            i.putExtra("entry", entry);
+            ShowDetailsActivity.this.startActivity(i);
+
+        }else if(v.getId()==buttonDelete.getId()){
+            db.entryDao().delete(entry);
+            ShowDetailsActivity.this.startActivity(new Intent(ShowDetailsActivity.this, MainActivity.class));
+        }
     }
 }
