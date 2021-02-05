@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.epraneeth.assignmentfeb2.R;
 import com.epraneeth.assignmentfeb2.activities.MainActivity;
@@ -26,12 +27,14 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
+import java.util.List;
 
 public class CreateEntryFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     EditText textName, textDOB, textMobile;
     Button buttonSave;
     ViewPager viewPager;
+    List<Entry> entriesList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,13 +57,30 @@ public class CreateEntryFragment extends Fragment implements DatePickerDialog.On
 
     private void onClick(View view) {
         AppDatabase db = AppDatabase.getDbInstance(this.getContext());
-        if(view.getId()==buttonSave.getId()){
-            Entry entry = new Entry(textName.getText().toString(),
-                    textDOB.getText().toString(),
-                    textMobile.getText().toString());
-            db.entryDao().insertEntry(entry);
-            viewPager.setCurrentItem(0);
+        entriesList = db.entryDao().getAllEntries();
 
+        if(view.getId()==buttonSave.getId()){
+            boolean entryExists = false;
+            Log.d("abc","CReateEntryFragmetn  buttonsave");
+            Log.d("abc", "size: "+ entriesList.size());
+            for(Entry entry2: entriesList){
+                Log.d("abc","-->"+entry2.getMobile());
+                Log.d("abc","------>"+String.valueOf(textMobile.getText()));
+                if(entry2.getMobile().equals(String.valueOf(textMobile.getText()))){
+                    Log.d("abc", "matched: "+entry2.getMobile());
+                    entryExists = true;
+                    Toast.makeText(getContext(),"Entry with mobile no. already exists", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+            if(entryExists==false) {
+                Toast.makeText(getContext(),"Entry saved", Toast.LENGTH_SHORT).show();
+                Entry entry = new Entry(textName.getText().toString(),
+                        textDOB.getText().toString(),
+                        textMobile.getText().toString());
+                db.entryDao().insertEntry(entry);
+                viewPager.setCurrentItem(0);
+            }
         }else if(view.getId()==textDOB.getId()){
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     getContext(),

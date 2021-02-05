@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    EntryListsAdapter entryListsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

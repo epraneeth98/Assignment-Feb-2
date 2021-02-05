@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.epraneeth.assignmentfeb2.R;
 import com.epraneeth.assignmentfeb2.db.Entry;
+import com.epraneeth.assignmentfeb2.fragments.EntryListsFragment;
 import com.epraneeth.assignmentfeb2.viewholders.EntryListsViewHolder;
 
 import java.util.ArrayList;
@@ -20,24 +21,30 @@ import java.util.List;
 
 public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder> {
     Context mContext;
-    private List<Entry> entryList= new ArrayList<>();
+    private List<Entry> entryList = new ArrayList<>();
+    boolean isContexualModeEnabled;
+    EntryListsFragment entryListsFragment;
 
-    public EntryListsAdapter(Context mContext) {
+
+    public EntryListsAdapter(Context mContext, boolean b, EntryListsFragment entryListsFragment) {
         this.mContext = mContext;
+        this.isContexualModeEnabled = b;
+        this.entryListsFragment = entryListsFragment;
     }
 
-    public void setEntryList(List<Entry> entryList){
+    public void setContexualMode(boolean b){
+        isContexualModeEnabled = b;
+        notifyDataSetChanged();
+    }
+
+    public void setEntryList(List<Entry> entryList) {
         this.entryList = entryList;
         notifyDataSetChanged();
     }
 
-    public void removeEntry(int position){
+    public void removeEntry(int position) {
         this.entryList.remove(position);
         notifyDataSetChanged();
-    }
-
-    public  void editEntry(int position){
-
     }
 
     @NonNull
@@ -50,9 +57,23 @@ public class EntryListsAdapter extends RecyclerView.Adapter<EntryListsViewHolder
     @Override
     public void onBindViewHolder(@NonNull EntryListsViewHolder holder, int position) {
         holder.textView.setText(entryList.get(position).name);
-        Entry entry  = entryList.get(position);
+        Entry entry = entryList.get(position);
         holder.setContext(mContext);
         holder.setEntry(entry);
+        holder.itemView.setOnLongClickListener(v -> {
+            entryListsFragment.onLongClick(v);
+            return false;
+        });
+        holder.checkBox.setOnClickListener(v -> {
+            entryListsFragment.makeSelection(v, position);
+        });
+
+        if (entryListsFragment.isContexualModeEnabled == false) {
+            holder.checkBox.setVisibility(View.GONE);
+        } else {
+            holder.checkBox.setVisibility(View.VISIBLE);
+            holder.checkBox.setChecked(false);
+        }
     }
 
     @Override

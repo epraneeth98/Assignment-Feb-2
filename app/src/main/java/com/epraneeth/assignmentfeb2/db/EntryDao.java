@@ -17,6 +17,9 @@ public interface EntryDao {
     @Query("SELECT * FROM entry WHERE uid=:id")
     Entry getEntry(long id);
 
+    @Query("SELECT * FROM entry WHERE mobile=:mobile")
+    Entry getEntry(String mobile);
+
     @Insert
     void insertEntry(Entry entry);
 
